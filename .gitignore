@@ -1,0 +1,44 @@
+# Flutter/Dart/Pub related
+**/build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+generated_plugin_registrant.dart
+
+# IntelliJ related
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# Visual Studio Code related
+.vscode/
+
+# Android related
+*.apk
+*.aar
+*.jks
+
+# iOS related
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcworkspace
+DerivedData/
+*.hmap
+*.ipa
+
+# Miscellaneous
+*.log
+*.lock
+*.pyc
+*.pyo
+*.class
+
+# Flutter Environment Variables
+.env
