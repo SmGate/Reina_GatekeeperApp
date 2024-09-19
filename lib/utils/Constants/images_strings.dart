@@ -8,6 +8,7 @@ class AppImages {
   static const String visitorDetail = "${iconPngBasePath}guest_history.png";
   static const String noticeBoard = "${iconPngBasePath}notice_board.png";
   static const String emergency = "${iconPngBasePath}panic_button.png";
+  static const String resident = "${iconPngBasePath}resident.png";
   static const String preApprovedEntry =
       "${iconPngBasePath}pre-approved-vistors.png";
 

@@ -17,6 +17,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../ResidentQrEntryExit/view/resident-qr_entry_exit.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -48,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSpeaking4 = false;
   bool isSpeaking5 = false;
   bool isSpeaking6 = false;
-
+  bool isSpeaking7 = false;
   @override
   void initState() {
     super.initState();
@@ -128,25 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 26,
                         ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(
-                        //       left: languageCode == "ur" ? 10 : 20,
-                        //       right: languageCode == "ur" ? 0 : 20),
-                        //   child: Text(
-                        //     "welcome".trParams({
-                        //       "firstName": "${controller.user.firstName}",
-                        //       "lastName": "${controller.user.lastName}"
-                        //     }),
-                        //     style: reusableTextStyle(
-                        //         textStyle: GoogleFonts.dmSans(),
-                        //         fontSize: 18.0,
-                        //         color: AppColors.globalWhite,
-                        //         fontWeight: FontWeight.bold),
-                        //   ),
-                        // ),
-                        // SizedBox(
-                        //   height: 13,
-                        // ),
                         SizedBox(
                           height: 9,
                         ),
@@ -158,24 +141,88 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: SvgPicture.asset(AppImages.buildingsIcon),
                           ),
                         ),
-
                         Padding(
-                          padding: const EdgeInsets.only(top: 20, right: 20),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: ElevatedButton(
-                                onPressed: () {
+                          padding: const EdgeInsets.only(
+                              top: 20, left: 20, right: 20),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(ResidentQrEntryExit());
+                                },
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.globalWhite,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            AppImages.resident,
+                                            height: 25,
+                                            color: AppColors.appThem,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'resident_entry'.tr,
+                                            style: reusableTextStyle(
+                                                textStyle: GoogleFonts.dmSans(),
+                                                fontSize: 12.0,
+                                                color: AppColors.appThem,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Spacer(),
+                              GestureDetector(
+                                onTap: () {
                                   Get.offNamed(vistorDetailScreen,
                                       arguments: controller.user);
                                 },
-                                child: Text(
-                                  "Add Visitor",
-                                  style: reusableTextStyle(
-                                      textStyle: GoogleFonts.dmSans(),
-                                      fontSize: 12.0,
-                                      color: AppColors.appThem,
-                                      fontWeight: FontWeight.bold),
-                                )),
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.globalWhite,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 10),
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            AppImages.visitorDetail,
+                                            height: 25,
+                                            color: AppColors.appThem,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'add_visitors'.tr,
+                                            style: reusableTextStyle(
+                                                textStyle: GoogleFonts.dmSans(),
+                                                fontSize: 12.0,
+                                                color: AppColors.appThem,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       ]),
@@ -714,6 +761,100 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+
+                ///////////////////////////
+                // CustomCard(
+                //   onTap: () {
+                //     // Get.offNamed(vehicleNumberScannerScreen,
+                //     //     arguments: controller.user);
+                //   },
+                //   width: double.infinity,
+                //   margin: EdgeInsets.only(
+                //     bottom: 20,
+                //     left: 20,
+                //     right: 20,
+                //   ),
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(top: 10, bottom: 10),
+                //     child: Row(
+                //       children: [
+                //         SizedBox(
+                //           width: 20,
+                //         ),
+                //         Container(
+                //           width: 50,
+                //           height: 50,
+                //           decoration: BoxDecoration(
+                //               color: AppColors.appThem,
+                //               borderRadius: BorderRadius.circular(10)),
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(8.0),
+                //             child: Image.asset(
+                //               AppImages.resident,
+                //               color: AppColors.globalWhite,
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           width: 20,
+                //         ),
+                //         Padding(
+                //           padding: EdgeInsets.only(
+                //               right: Get.locale?.languageCode == 'ur' ? 20 : 0),
+                //           child: Column(
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
+                //               Text(
+                //                 'resident_entry'.tr,
+                //                 style: reusableTextStyle(
+                //                     textStyle: GoogleFonts.dmSans(),
+                //                     fontSize: 14.0,
+                //                     color: AppColors.textBlack,
+                //                     fontWeight: FontWeight.bold),
+                //               ),
+                //               SizedBox(
+                //                 width: 140,
+                //                 child: Text(
+                //                   'resident_checkin-checkout'.tr,
+                //                   style: reusableTextStyle(
+                //                       textStyle: GoogleFonts.dmSans(),
+                //                       fontSize: 12.0,
+                //                       color: AppColors.dark,
+                //                       fontWeight: FontWeight.normal),
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //         Spacer(),
+                //         isSpeaking7 == true
+                //             ? IconButton(
+                //                 onPressed: () {
+                //                   setState(() {
+                //                     isSpeaking7 = false;
+                //                     stopSpeaking();
+                //                     print(isSpeaking7);
+                //                   });
+                //                 },
+                //                 icon: Icon(Icons.volume_down_alt))
+                //             : IconButton(
+                //                 onPressed: () {
+                //                   setState(() {
+                //                     isSpeaking7 = true;
+                //                     speakUrdu(
+                //                         InstructionLabels.CHECKIN_CHECKOUT_INS);
+
+                //                     print(isSpeaking7);
+                //                   });
+                //                 },
+                //                 icon: Icon(Icons.volume_off)),
+                //         SizedBox(
+                //           width: 20,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
 
                 //////////////////////////////
 

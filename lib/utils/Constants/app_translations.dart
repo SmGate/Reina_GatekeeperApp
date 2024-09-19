@@ -30,6 +30,9 @@ class AppTranslations extends Translations {
           'vehicle_number': 'Vehicle Number',
           'scan_vehicle_number': 'Scan Vehicle Number',
           'check_result': 'Check Result',
+          'resident_entry': 'Resident Entry',
+          'resident_checkin-checkout': 'Resident Check-In Check-Out',
+          'add_visitors': 'Add Visitors',
         },
         'ur_PK': {
           'home': 'ابتدائی اسکرین ',
@@ -58,7 +61,10 @@ class AppTranslations extends Translations {
           'vehicle_detail': 'گاڑی کی تفصیلات',
           'vehicle_number': 'گاڑی کا نمبر',
           "scan_vehicle_number": "گاڑی کا نمبر اسکین کریں",
-          "check_result": "نتیجہ چیک کریں"
+          "check_result": "نتیجہ چیک کریں",
+          'resident_entry': 'رہائشی داخلہ',
+          'resident_checkin-checkout': 'رہائشی چیک ان/چیک آؤٹ',
+          'add_visitors': 'زائرین کو شامل کریں۔',
         }
       };
 }

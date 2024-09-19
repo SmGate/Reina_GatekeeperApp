@@ -15,4 +15,7 @@ class InstructionLabels {
 
   static const String PARKING_SCANING_INS =
       "اس اسکرین پر جا کر آپ رہائشی کی پارکنگ کو اسکین کر سکتے ہیں۔";
+
+  static const String CHECKIN_CHECKOUT_INS =
+      "اس کی خصوصیت رہائشیوں کو QR کوڈ اسکین کرکے چیک ان یا چیک آؤٹ کرنے کی اجازت دیتی ہے۔";
 }
