@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/model/checkedin_residents_model.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/model/update_resident_entry_model.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/service/resident_entry_service.dart';
@@ -14,8 +13,8 @@ class ResidentQrEntryController extends GetxController {
   List<Datum> dataList = [];
   RxString error = "".obs;
   var allResidentRec = CheckedInResidentModel();
-
-  static const pageSize = 10;
+  RxString searchValue = "".obs;
+  static const pageSize = 3;
   final PagingController<int, Datum> pagingController =
       PagingController(firstPageKey: 1);
 
@@ -25,13 +24,14 @@ class ResidentQrEntryController extends GetxController {
   RxBool loading = false.obs;
   @override
   void onInit() {
+    print("init call");
     super.onInit();
     userdata = data;
 
     pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(
+      fetchPage(
           status: "",
-          visitorType: "",
+          visitorType: "resident",
           societyId: userdata.societyid.toString(),
           pageKey: pageKey,
           limit: pageSize);
@@ -67,7 +67,7 @@ class ResidentQrEntryController extends GetxController {
   }
 
 //////  METHOD FOR PAGINATION
-  Future<void> _fetchPage(
+  Future<void> fetchPage(
       {String? status,
       String? societyId,
       String? visitorType,
@@ -89,12 +89,12 @@ class ResidentQrEntryController extends GetxController {
     }
   }
 
-  void updateResidentEntryStatus(
-      {int? societyId,
-      int? residentId,
-      int? gatekeeperId,
-      int? subadminid,
-      BuildContext? context}) async {
+  void updateResidentEntryStatus({
+    int? societyId,
+    int? residentId,
+    int? gatekeeperId,
+    int? subadminid,
+  }) async {
     loading.value = true;
     error1.value = "";
 
@@ -103,14 +103,13 @@ class ResidentQrEntryController extends GetxController {
         residentId: residentId,
         gatekeeperId: gatekeeperId,
         subadminid: subadminid);
-
+    loading.value = false;
     if (res is UpdateResidentEntryModel) {
       residentEntryStatusModel = res;
 
-      Navigator.of(context!).pop();
       Get.snackbar("Message", residentEntryStatusModel.message.toString());
-
-      Get.offAll(homescreen, arguments: userdata);
+////  goto screen
+      Get.offNamed(residentRecords, arguments: userdata);
     } else {
       loading.value = false;
       error1.value = res.toString();

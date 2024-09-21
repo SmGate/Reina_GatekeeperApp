@@ -87,25 +87,6 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Cnic No',
-            style: reusableTextStyle(
-                textStyle: GoogleFonts.dmSans(),
-                fontSize: 16.0,
-                color: AppColors.textBlack,
-                fontWeight: FontWeight.bold),
-          ),
-          4.h.ph,
-          Text(
-            residents?.cnic ?? "",
-            style: reusableTextStyle(
-                textStyle: GoogleFonts.dmSans(),
-                fontSize: 14.0,
-                color: AppColors.dark,
-                fontWeight: FontWeight.normal),
-          ),
-          14.h.ph,
-          14.h.ph,
-          Text(
             'Mobile No',
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
@@ -176,6 +157,24 @@ class ResidentsDialogCard extends StatelessWidget {
                 fontWeight: FontWeight.normal),
           ),
           14.h.ph,
+          Text(
+            'Checkout Time',
+            style: reusableTextStyle(
+                textStyle: GoogleFonts.dmSans(),
+                fontSize: 16.0,
+                color: AppColors.textBlack,
+                fontWeight: FontWeight.bold),
+          ),
+          4.h.ph,
+          Text(
+            residents?.checkouttime ?? "",
+            style: reusableTextStyle(
+                textStyle: GoogleFonts.dmSans(),
+                fontSize: 14.0,
+                color: AppColors.dark,
+                fontWeight: FontWeight.normal),
+          ),
+          14.h.ph,
           Row(
             children: [
               Column(
@@ -191,7 +190,10 @@ class ResidentsDialogCard extends StatelessWidget {
                   ),
                   11.w.pw,
                   Text(
-                    DateHelper.formatDate(residents!.arrivaldate.toString()),
+                    residents!.arrivaldate != null
+                        ? DateHelper.formatDate(
+                            residents!.arrivaldate.toString())
+                        : "NA",
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 14.0,
@@ -214,12 +216,16 @@ class ResidentsDialogCard extends StatelessWidget {
                   ),
                   11.w.pw,
                   Text(
-                    DateHelper.formatDate(residents!.checkoutdate.toString()),
+                    residents!.checkoutdate != null
+                        ? DateHelper.formatDate(
+                            residents!.checkoutdate.toString())
+                        : 'NA',
                     style: reusableTextStyle(
-                        textStyle: GoogleFonts.dmSans(),
-                        fontSize: 14.0,
-                        color: AppColors.dark,
-                        fontWeight: FontWeight.normal),
+                      textStyle: GoogleFonts.dmSans(),
+                      fontSize: 14.0,
+                      color: AppColors.dark,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                 ],
               ),

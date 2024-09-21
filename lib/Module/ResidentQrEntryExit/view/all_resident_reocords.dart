@@ -6,6 +6,7 @@ import 'package:gatekeeper/Module/ResidentQrEntryExit/model/checkedin_residents_
 import 'package:gatekeeper/Routes/set_routes.dart';
 import 'package:gatekeeper/Widgets/new_widgets/custom_container.dart';
 import 'package:gatekeeper/Widgets/new_widgets/loading.dart';
+import 'package:gatekeeper/Widgets/new_widgets/my_textform_field.dart';
 import 'package:gatekeeper/utils/Constants/images_strings.dart';
 
 import 'package:gatekeeper/utils/styles/colors.dart';
@@ -25,6 +26,7 @@ class AllResidentRecord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<ResidentQrEntryController>();
+
     return WillPopScope(
       onWillPop: () async {
         Get.offNamed(homescreen, arguments: controller.userdata);
@@ -43,105 +45,13 @@ class AllResidentRecord extends StatelessWidget {
                       Get.offNamed(homescreen, arguments: controller.userdata);
                     },
                   ),
-                  // Padding(
-                  //   padding:
-                  //       const EdgeInsets.only(left: 20, right: 20, top: 20),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //     children: [
-                  //       Expanded(
-                  //         child: Container(
-                  //           padding: EdgeInsets.symmetric(
-                  //               horizontal: 12, vertical: 5),
-                  //           decoration: BoxDecoration(
-                  //             color: Colors.white,
-                  //             borderRadius:
-                  //                 BorderRadius.circular(12), // Rounded corners
-                  //           ),
-                  //           child: Obx(() {
-                  //             return DropdownButtonHideUnderline(
-                  //               child: DropdownButton<String>(
-                  //                 hint: Text(
-                  //                   "Select Option",
-                  //                   style: TextStyle(fontSize: 12),
-                  //                 ),
-                  //                 value: controller.selectedValue?.value
-                  //                             .isNotEmpty ==
-                  //                         true
-                  //                     ? controller.selectedValue?.value
-                  //                     : null,
-                  //                 items: controller.items.map((String item) {
-                  //                   return DropdownMenuItem<String>(
-                  //                     value: item,
-                  //                     child: Text(
-                  //                       item,
-                  //                       style: TextStyle(fontSize: 12),
-                  //                     ),
-                  //                   );
-                  //                 }).toList(),
-                  //                 onChanged: (String? newValue) {
-                  //                   // String formattedValue = newValue!
-                  //                   //     .toLowerCase()
-                  //                   //     .replaceAll('-', '');
-                  //                   controller.setSelected(newValue!);
-                  //                 },
-                  //                 isExpanded: true,
-                  //                 dropdownColor: Colors.white,
-                  //               ),
-                  //             );
-                  //           }),
-                  //         ),
-                  //       ),
-                  //       SizedBox(
-                  //         width: 30,
-                  //       ),
-                  //       Expanded(
-                  //         child: Container(
-                  //           padding: EdgeInsets.symmetric(
-                  //               horizontal: 12, vertical: 5),
-                  //           decoration: BoxDecoration(
-                  //             color: Colors.white,
-                  //             borderRadius:
-                  //                 BorderRadius.circular(12), // Rounded corners
-                  //           ),
-                  //           child: Obx(() {
-                  //             return DropdownButtonHideUnderline(
-                  //               child: DropdownButton<String>(
-                  //                 hint: Text(
-                  //                   "Select Option",
-                  //                   style: TextStyle(fontSize: 12),
-                  //                 ),
-                  //                 value: controller.selectedVisitorType?.value
-                  //                                 .isNotEmpty ==
-                  //                             true &&
-                  //                         controller.vistorType.contains(
-                  //                             controller
-                  //                                 .selectedVisitorType?.value)
-                  //                     ? controller.selectedVisitorType?.value
-                  //                     : null,
-                  //                 items:
-                  //                     controller.vistorType.map((String item) {
-                  //                   return DropdownMenuItem<String>(
-                  //                     value: item,
-                  //                     child: Text(
-                  //                       item,
-                  //                       style: TextStyle(fontSize: 12),
-                  //                     ),
-                  //                   );
-                  //                 }).toList(),
-                  //                 onChanged: (String? newValue) {
-                  //            controller.setSelectedVisitorType(newValue!); // Update the selected value
-                  //                 },
-                  //                 isExpanded: true,
-                  //                 dropdownColor: Colors.white,
-                  //               ),
-                  //             );
-                  //           }),
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
+                  MyTextFormField(
+                    hintText: "Search Name ",
+                    labelText: "Search Name",
+                    onChanged: (v) {
+                      controller.searchValue.value = v;
+                    },
+                  ),
                   Expanded(
                     child: PagedListView(
                       shrinkWrap: true,
@@ -159,155 +69,39 @@ class AllResidentRecord extends StatelessWidget {
                         },
                         newPageProgressIndicatorBuilder: (context) {
                           return Center(
-                            child: CircularProgressIndicator(
-                                color: AppColors.appThem),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(
+                                  color: AppColors.appThem),
+                            ),
                           );
                         },
                         noItemsFoundIndicatorBuilder: (context) {
                           return Padding(
                             padding: const EdgeInsets.only(top: 300),
                             child: EmptyList(
-                              name: 'No Complains',
+                              name: 'No Entrise',
                             ),
                           );
                         },
                         itemBuilder: (context, item, index) {
                           final Datum residents = item as Datum;
-
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                top: index == 0 ? 20 : 15, left: 20, right: 20),
-                            child: CustomCard(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                            backgroundColor:
-                                                AppColors.globalWhite,
-                                            surfaceTintColor:
-                                                AppColors.globalWhite,
-                                            content: ResidentsDialogCard(
-                                              residents: residents,
-                                            ),
-                                          ));
-                                },
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10, horizontal: 10),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                            AppImages.demoUser,
-                                            height: 40,
-                                            //color: AppColors.globalWhite,
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                residents.name ?? "",
-                                                style: reusableTextStyle(
-                                                    textStyle:
-                                                        GoogleFonts.dmSans(),
-                                                    fontSize: 14.0,
-                                                    color: AppColors.textBlack,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "Mobile  ",
-                                                    style: reusableTextStyle(
-                                                        textStyle: GoogleFonts
-                                                            .dmSans(),
-                                                        fontSize: 14.0,
-                                                        color:
-                                                            AppColors.textBlack,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                  Text(
-                                                    residents.mobileno ?? "",
-                                                    style: reusableTextStyle(
-                                                        textStyle: GoogleFonts
-                                                            .dmSans(),
-                                                        fontSize: 14.0,
-                                                        color: AppColors.dark,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "CNIC     ",
-                                                    style: reusableTextStyle(
-                                                        textStyle: GoogleFonts
-                                                            .dmSans(),
-                                                        fontSize: 14.0,
-                                                        color:
-                                                            AppColors.textBlack,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                  Text(
-                                                    residents.cnic ?? "",
-                                                    style: reusableTextStyle(
-                                                        textStyle: GoogleFonts
-                                                            .dmSans(),
-                                                        fontSize: 14.0,
-                                                        color: AppColors.dark,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "Status     ",
-                                                    style: reusableTextStyle(
-                                                        textStyle: GoogleFonts
-                                                            .dmSans(),
-                                                        fontSize: 14.0,
-                                                        color:
-                                                            AppColors.textBlack,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                  Text(
-                                                    residents
-                                                            .statusdescription ??
-                                                        "",
-                                                    style: reusableTextStyle(
-                                                        textStyle: GoogleFonts
-                                                            .dmSans(),
-                                                        fontSize: 14.0,
-                                                        color: AppColors.dark,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )),
-                          );
+                          return Obx(() {
+                            if ((residents.name!.toLowerCase().contains(
+                                        controller.searchValue.value) &&
+                                    controller.searchValue.value.isNotEmpty) ||
+                                controller.searchValue.value.isEmpty) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    top: index == 0 ? 20 : 15,
+                                    left: 20,
+                                    right: 20),
+                                child: ResidentCard(residents: residents),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          });
                         },
                       ),
                     ),
@@ -325,5 +119,103 @@ class AllResidentRecord extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ResidentCard extends StatelessWidget {
+  const ResidentCard({
+    super.key,
+    required this.residents,
+  });
+
+  final Datum residents;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomCard(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                    backgroundColor: AppColors.globalWhite,
+                    surfaceTintColor: AppColors.globalWhite,
+                    content: ResidentsDialogCard(
+                      residents: residents,
+                    ),
+                  ));
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    AppImages.demoUser,
+                    height: 40,
+                    //color: AppColors.globalWhite,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        residents.name ?? "",
+                        style: reusableTextStyle(
+                            textStyle: GoogleFonts.dmSans(),
+                            fontSize: 14.0,
+                            color: AppColors.textBlack,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Mobile  ",
+                            style: reusableTextStyle(
+                                textStyle: GoogleFonts.dmSans(),
+                                fontSize: 14.0,
+                                color: AppColors.textBlack,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            residents.mobileno ?? "",
+                            style: reusableTextStyle(
+                                textStyle: GoogleFonts.dmSans(),
+                                fontSize: 14.0,
+                                color: AppColors.dark,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "Status     ",
+                            style: reusableTextStyle(
+                                textStyle: GoogleFonts.dmSans(),
+                                fontSize: 14.0,
+                                color: AppColors.textBlack,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            residents.statusdescription ?? "",
+                            style: reusableTextStyle(
+                                textStyle: GoogleFonts.dmSans(),
+                                fontSize: 14.0,
+                                color: AppColors.dark,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }

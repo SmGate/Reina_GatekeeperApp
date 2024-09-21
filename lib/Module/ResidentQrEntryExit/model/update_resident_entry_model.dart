@@ -47,14 +47,14 @@ class Data {
   String? cnic;
   String? mobileno;
   String? vechileno;
-  DateTime? arrivaldate;
+  String? arrivaldate;
   String? arrivaltime;
   String? checkoutdate;
   String? checkouttime;
   int? status;
   String? statusdescription;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  // DateTime? createdAt;
+  // DateTime? updatedAt;
 
   Data({
     this.id,
@@ -74,8 +74,8 @@ class Data {
     this.checkouttime,
     this.status,
     this.statusdescription,
-    this.createdAt,
-    this.updatedAt,
+    // this.createdAt,
+    // this.updatedAt,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -90,20 +90,18 @@ class Data {
         cnic: json["cnic"],
         mobileno: json["mobileno"],
         vechileno: json["vechileno"],
-        arrivaldate: json["arrivaldate"] == null
-            ? null
-            : DateTime.parse(json["arrivaldate"]),
+        arrivaldate: json["arrivaldate"],
         arrivaltime: json["arrivaltime"],
         checkoutdate: json["checkoutdate"],
         checkouttime: json["checkouttime"],
         status: json["status"],
         statusdescription: json["statusdescription"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        // createdAt: json["created_at"] == null
+        //     ? null
+        //     : DateTime.parse(json["created_at"]),
+        // updatedAt: json["updated_at"] == null
+        //     ? null
+        //     : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -118,14 +116,13 @@ class Data {
         "cnic": cnic,
         "mobileno": mobileno,
         "vechileno": vechileno,
-        "arrivaldate":
-            "${arrivaldate!.year.toString().padLeft(4, '0')}-${arrivaldate!.month.toString().padLeft(2, '0')}-${arrivaldate!.day.toString().padLeft(2, '0')}",
+        "arrivaldate": arrivaldate,
         "arrivaltime": arrivaltime,
         "checkoutdate": checkoutdate,
         "checkouttime": checkouttime,
         "status": status,
         "statusdescription": statusdescription,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        // "created_at": createdAt?.toIso8601String(),
+        // "updated_at": updatedAt?.toIso8601String(),
       };
 }
