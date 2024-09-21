@@ -1,15 +1,13 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gatekeeper/utils/Constants/api_routes.dart';
+import 'package:gatekeeper/Module/ResidentQrEntryExit/controller/resident_qr_entry_exit_controller.dart';
+import 'package:gatekeeper/Module/ResidentQrEntryExit/view/qr_details_screen.dart';
 import 'package:gatekeeper/utils/styles/colors.dart';
-import 'package:gatekeeper/utils/styles/text_style.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ResidentQrEntryExit extends StatefulWidget {
@@ -18,11 +16,14 @@ class ResidentQrEntryExit extends StatefulWidget {
 }
 
 class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
-  //var preApprovedEntryController = Get.find<PreApproveEntriesController>();
+  final ResidentQrEntryController residentController =
+      Get.find<ResidentQrEntryController>();
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   QRViewController? controller;
-  bool isDialogShown = false; // Flag to control dialog display
+  late StreamSubscription<Barcode> scanSubscription;
+  bool isDialogShown = false;
   Map<String, dynamic>? scannedData;
+
   @override
   void reassemble() {
     super.reassemble();
@@ -34,7 +35,8 @@ class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    scanSubscription.cancel(); // Cancel the subscription
+    controller?.dispose(); // Dispose the controller
     super.dispose();
   }
 
@@ -55,27 +57,27 @@ class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
       this.controller = controller;
     });
 
-    controller.scannedDataStream.listen((scanData) async {
+    scanSubscription = controller.scannedDataStream.listen((scanData) async {
       if (scanData.code == null || scanData.code!.isEmpty) {
         Get.snackbar("Error", "Scanned data is empty.");
         return;
       }
 
-      if (isDialogShown) {
-        return;
-      }
+      if (isDialogShown) return;
 
       try {
         // Save scanned data
         scannedData = jsonDecode(scanData.code!);
-        print("Scan data is  $scannedData");
+        print("Scan data is: $scannedData");
 
         isDialogShown = true;
-        controller.dispose();
+        controller.pauseCamera(); // Pause the camera before showing the dialog
         await _showDialogWithScannedData(scannedData!);
       } catch (e) {
         print('Parsing error: $e');
         Get.snackbar("Error", "Failed to parse scanned data: ${e.toString()}");
+      } finally {
+        // Don't dispose the controller here
       }
     });
   }
@@ -84,6 +86,7 @@ class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
     try {
       // Extracting data into individual variables
       int? userId = data['userId'] as int?;
+      int? residentId = data['residentid'] as int?;
       String? firstName = data['firstName'] as String?;
       String? lastName = data['lastName'] as String?;
       String? address = data['address'] as String?;
@@ -91,85 +94,21 @@ class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
       String? mobile = data['mobile'] as String?;
       String? image = data['image'] as String?;
 
-      // Display the extracted data in the dialog
-      await showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Resident Information'),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  if (image != null && image.isNotEmpty)
-                    Container(
-                      margin: EdgeInsets.all(20),
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(shape: BoxShape.circle),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(300),
-                        child: CachedNetworkImage(
-                          imageUrl: "${Api.imageBaseUrl}${image}",
-                          placeholder: (context, url) => Center(
-                              child: CircularProgressIndicator(
-                            color: AppColors.appThem,
-                          )),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          height: 200,
-                          width: double.infinity,
-                        ),
-                      ),
-                    ),
-                  SizedBox(height: 20),
-                  QrText(text1: "Id", text2: userId.toString()),
-                  QrText(text1: "Name", text2: "$firstName $lastName"),
-                  QrText(text1: "Mobile", text2: mobile ?? ""),
-                  QrText(text1: "Role", text2: roleName ?? ""),
-                  QrText(text1: "Address", text2: address ?? ""),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ),
-          );
-        },
-      );
+      // Navigate to the QrDetailsScreen
+      Get.to(() => QrDetailsScreen(
+            userId: residentId,
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            roleName: roleName,
+            mobile: mobile,
+            image: image,
+          ));
+
+      // After navigating, set the dialog shown flag back to false
+      isDialogShown = false;
     } catch (e) {
       Get.snackbar("Error", "Failed to fetch scanned data: ${e.toString()}");
     }
-  }
-
-  Widget QrText({
-    String? text1,
-    String? text2,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          text1 ?? "",
-          style: reusableTextStyle(
-              textStyle: GoogleFonts.dmSans(),
-              fontSize: 14.0,
-              color: AppColors.textBlack,
-              fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          width: 80,
-        ),
-        Text(
-          text2 ?? "",
-          style: reusableTextStyle(
-              textStyle: GoogleFonts.dmSans(),
-              fontSize: 14.0,
-              color: AppColors.dark,
-              fontWeight: FontWeight.normal),
-        ),
-      ],
-    );
   }
 }

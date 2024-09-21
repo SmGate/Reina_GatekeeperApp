@@ -33,6 +33,7 @@ class AppTranslations extends Translations {
           'resident_entry': 'Resident Entry',
           'resident_checkin-checkout': 'Resident Check-In Check-Out',
           'add_visitors': 'Add Visitors',
+          'resident_history': 'Resident History',
         },
         'ur_PK': {
           'home': 'ابتدائی اسکرین ',
@@ -65,6 +66,7 @@ class AppTranslations extends Translations {
           'resident_entry': 'رہائشی داخلہ',
           'resident_checkin-checkout': 'رہائشی چیک ان/چیک آؤٹ',
           'add_visitors': 'زائرین کو شامل کریں۔',
+          'resident_history': 'رہائشی ریکارڈز',
         }
       };
 }

@@ -10,5 +10,5 @@ const String noticeboardscreen = '/NoticeBoardScreen';
 const String vistorDetailScreen = '/VistorDetailScreen';
 const String addVistorDetailScreen = '/AddVistorDetailScreen';
 const String residentialEmergencyScreen = '/ResidentialEmergencyScreen';
-
+const String residentRecords = '/residentRecords';
 const String vehicleNumberScannerScreen = '/vehicleNumberScannerScreen';

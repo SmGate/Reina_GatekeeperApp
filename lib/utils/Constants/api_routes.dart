@@ -24,6 +24,6 @@ class Api {
   static const String unapprovedpreapproveentrycount =
       baseUrl + "unapprovedpreapproveentrycount";
   static const String vehicleOwnerDetail = baseUrl + "loginresidentdetails";
-
   static const String sendNotificationToResident = baseUrl + "wrong-parking";
+  static const String residentEntryExit = baseUrl + "entry-exit";
 }

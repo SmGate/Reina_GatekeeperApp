@@ -17,6 +17,7 @@ class AppImages {
   static const String splash = "${iconPngBasePath}spalsh.png";
   static const String logo = "${iconPngBasePath}logo.png";
   static const String parking = "${iconPngBasePath}parking.png";
+  static const String demoUser = "${iconPngBasePath}demouser.png";
   //  ==========   S V G ===========================
 
   static const String buildingsIcon = "${iconSvgBasePath}building.svg";

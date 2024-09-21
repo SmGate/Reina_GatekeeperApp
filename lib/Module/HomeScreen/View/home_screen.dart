@@ -17,8 +17,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../ResidentQrEntryExit/view/resident-qr_entry_exit.dart';
-
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -148,7 +146,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(ResidentQrEntryExit());
+                                  Get.toNamed(residentRecords,
+                                      arguments: controller.user);
+                                  // Get.to(ResidentQrEntryExit());
                                 },
                                 child: Container(
                                   height: 40,

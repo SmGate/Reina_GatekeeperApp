@@ -9,6 +9,7 @@ import '../Module/Events/View/events_screen.dart';
 import '../Module/HomeScreen/View/home_screen.dart';
 import '../Module/NoticeBoard/View/notice_board_screen.dart';
 import '../Module/Pre Approved Guests/View/pre_approved_guests.dart';
+import '../Module/ResidentQrEntryExit/view/all_resident_reocords.dart';
 import '../Module/Residental Emergency/View/residential_emergency_screen.dart';
 import '../Module/Splash/View/splash_screen.dart';
 import '../Module/Vistor Detail/View/vistor_detail_screen.dart';
@@ -70,6 +71,11 @@ class RouteManagement {
       GetPage(
           name: vehicleNumberScannerScreen,
           page: () => VehicleNumberScanner(),
+          binding: ScreenBindings(),
+          transition: Transition.noTransition),
+      GetPage(
+          name: residentRecords,
+          page: () => AllResidentRecord(),
           binding: ScreenBindings(),
           transition: Transition.noTransition),
     ];
