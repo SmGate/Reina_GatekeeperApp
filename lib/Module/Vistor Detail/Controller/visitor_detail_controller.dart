@@ -4,6 +4,7 @@ import 'package:gatekeeper/Module/Vistor%20Detail/Model/visitor_detail_model.dar
 import 'package:gatekeeper/Module/Vistor%20Detail/service/visitor_detail_service.dart';
 import 'package:gatekeeper/utils/Constants/constants.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../Login/Model/User.dart';
 
 class VisitorDetailController extends GetxController {
@@ -15,34 +16,52 @@ class VisitorDetailController extends GetxController {
   String? currentTime;
   var status = Status.completed;
   RxBool isLoading = false.obs;
-
+  RxString searchValue = "".obs;
   var visitorDetailsModel = VisitorDetailModel();
   var error = "";
 
   var updateVisitorDetailModel = UpdateVisitorDetailModel();
   var errorUpdatingVisitorsDetails = "";
 
+  List<Datum> dataList = [];
+  var pageSize = 10;
+  final PagingController<int, Datum> pagingController =
+      PagingController(firstPageKey: 1);
+
   @override
   void onInit() {
     super.onInit();
 
     userdata = data;
+
+    pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(
+          societyId: userdata.societyid!, pageKey: pageKey, limit: pageSize);
+    });
   }
 
-  Future<VisitorDetailModel> getVisitorDetails({
+  Future<List<Datum>> getVisitorDetails({
     required int societyId,
+    int? pageKey,
+    int? limit,
   }) async {
     error = "";
-    var res = await VisitorDetailService.visitorDetail(societyId: societyId);
+
+    var res = await VisitorDetailService.visitorDetail(
+        societyId: societyId, pageKey: pageKey, limit: limit);
+
     if (res is VisitorDetailModel) {
       visitorDetailsModel = res;
-      return visitorDetailsModel;
+
+      List<Datum> newVisitors = res.data?.data ?? [];
+
+      return newVisitors;
     } else {
       error = res.toString();
       Get.snackbar("Error", error);
     }
 
-    return visitorDetailsModel;
+    return [];
   }
 
   Future updateVisitorDetailApi(
@@ -51,20 +70,35 @@ class VisitorDetailController extends GetxController {
       required String checkouttime,
       BuildContext? context}) async {
     errorUpdatingVisitorsDetails = "";
-    isLoading.value = true;
 
     var res = await VisitorDetailService.updateVisitorDetail(
         vid: vid, checkoutdate: checkoutdate, checkouttime: checkouttime);
-    isLoading.value = false;
+
     if (res is UpdateVisitorDetailModel) {
       updateVisitorDetailModel = res;
       if (context != null) {
         Navigator.pop(context); // Close the dialog box
       }
     } else {
-      isLoading.value = false;
       errorUpdatingVisitorsDetails = res.toString();
       Get.snackbar("Error", errorUpdatingVisitorsDetails);
+    }
+  }
+
+  Future<void> _fetchPage({
+    required int societyId,
+    int? pageKey,
+    int? limit,
+  }) async {
+    dataList = await getVisitorDetails(
+        pageKey: pageKey, societyId: societyId, limit: limit);
+
+    final isLastPage = dataList.length < pageSize;
+    if (isLastPage) {
+      pagingController.appendLastPage(dataList);
+    } else {
+      final nextPageKey = pageKey! + 1;
+      pagingController.appendPage(dataList, nextPageKey);
     }
   }
 }

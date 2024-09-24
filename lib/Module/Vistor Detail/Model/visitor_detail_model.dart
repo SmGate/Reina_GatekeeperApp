@@ -11,27 +11,99 @@ String visitorDetailModelToJson(VisitorDetailModel data) =>
     json.encode(data.toJson());
 
 class VisitorDetailModel {
+  String? message;
   bool? success;
-  List<Datum>? data;
+  Data? data;
 
   VisitorDetailModel({
+    this.message,
     this.success,
     this.data,
   });
 
   factory VisitorDetailModel.fromJson(Map<String, dynamic> json) =>
       VisitorDetailModel(
+        message: json["message"],
         success: json["success"],
-        data: json["data"] == null
-            ? []
-            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "message": message,
         "success": success,
+        "data": data?.toJson(),
+      };
+}
+
+class Data {
+  int? currentPage;
+  List<Datum>? data;
+  String? firstPageUrl;
+  int? from;
+  int? lastPage;
+  String? lastPageUrl;
+  List<Link>? links;
+  dynamic nextPageUrl;
+  String? path;
+  int? perPage;
+  dynamic prevPageUrl;
+  int? to;
+  int? total;
+
+  Data({
+    this.currentPage,
+    this.data,
+    this.firstPageUrl,
+    this.from,
+    this.lastPage,
+    this.lastPageUrl,
+    this.links,
+    this.nextPageUrl,
+    this.path,
+    this.perPage,
+    this.prevPageUrl,
+    this.to,
+    this.total,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        currentPage: json["current_page"],
+        data: json["data"] == null
+            ? []
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        firstPageUrl: json["first_page_url"],
+        from: json["from"],
+        lastPage: json["last_page"],
+        lastPageUrl: json["last_page_url"],
+        links: json["links"] == null
+            ? []
+            : List<Link>.from(json["links"]!.map((x) => Link.fromJson(x))),
+        nextPageUrl: json["next_page_url"],
+        path: json["path"],
+        perPage: json["per_page"],
+        prevPageUrl: json["prev_page_url"],
+        to: json["to"],
+        total: json["total"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "current_page": currentPage,
         "data": data == null
             ? []
             : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "first_page_url": firstPageUrl,
+        "from": from,
+        "last_page": lastPage,
+        "last_page_url": lastPageUrl,
+        "links": links == null
+            ? []
+            : List<dynamic>.from(links!.map((x) => x.toJson())),
+        "next_page_url": nextPageUrl,
+        "path": path,
+        "per_page": perPage,
+        "prev_page_url": prevPageUrl,
+        "to": to,
+        "total": total,
       };
 }
 
@@ -40,6 +112,8 @@ class Datum {
   int? gatekeeperid;
   int? societyid;
   int? subadminid;
+  int? residentId;
+  int? parkingSlotId;
   String? houseaddress;
   String? visitortype;
   String? name;
@@ -60,6 +134,8 @@ class Datum {
     this.gatekeeperid,
     this.societyid,
     this.subadminid,
+    this.residentId,
+    this.parkingSlotId,
     this.houseaddress,
     this.visitortype,
     this.name,
@@ -81,6 +157,8 @@ class Datum {
         gatekeeperid: json["gatekeeperid"],
         societyid: json["societyid"],
         subadminid: json["subadminid"],
+        residentId: json["resident_id"],
+        parkingSlotId: json["parking_slot_id"],
         houseaddress: json["houseaddress"],
         visitortype: json["visitortype"],
         name: json["name"],
@@ -110,6 +188,8 @@ class Datum {
         "gatekeeperid": gatekeeperid,
         "societyid": societyid,
         "subadminid": subadminid,
+        "resident_id": residentId,
+        "parking_slot_id": parkingSlotId,
         "houseaddress": houseaddress,
         "visitortype": visitortype,
         "name": name,
@@ -126,5 +206,29 @@ class Datum {
         "statusdescription": statusdescription,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+      };
+}
+
+class Link {
+  String? url;
+  String? label;
+  bool? active;
+
+  Link({
+    this.url,
+    this.label,
+    this.active,
+  });
+
+  factory Link.fromJson(Map<String, dynamic> json) => Link(
+        url: json["url"],
+        label: json["label"],
+        active: json["active"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "url": url,
+        "label": label,
+        "active": active,
       };
 }

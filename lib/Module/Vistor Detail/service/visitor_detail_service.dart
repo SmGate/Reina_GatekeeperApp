@@ -5,9 +5,14 @@ import 'package:gatekeeper/utils/Constants/base_client.dart';
 import 'package:http/http.dart' as http;
 
 class VisitorDetailService {
-  static Future<dynamic> visitorDetail({int? societyId}) async {
+  static Future<dynamic> visitorDetail({
+    int? societyId,
+    int? pageKey,
+    int? limit,
+  }) async {
     try {
-      var url = Api.viewvistordetail + "/" + societyId.toString();
+      var url =
+          "${Api.viewvistordetail}/$societyId?page=$pageKey&length=$limit";
       var res = await BaseClientClass.get(url, "");
 
       if (res is http.Response) {

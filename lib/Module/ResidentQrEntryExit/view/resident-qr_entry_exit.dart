@@ -36,7 +36,7 @@ class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
   @override
   void dispose() {
     scanSubscription.cancel(); // Cancel the subscription
-    controller?.dispose(); // Dispose the controller
+
     super.dispose();
   }
 
@@ -63,52 +63,41 @@ class _ResidentQrEntryExitState extends State<ResidentQrEntryExit> {
         return;
       }
 
-      if (isDialogShown) return;
-
       try {
         // Save scanned data
         scannedData = jsonDecode(scanData.code!);
         print("Scan data is: $scannedData");
 
-        isDialogShown = true;
-        controller.pauseCamera(); // Pause the camera before showing the dialog
-        await _showDialogWithScannedData(scannedData!);
+        controller.pauseCamera();
+
+        Map<String, dynamic> data = scannedData!;
+
+        int? userId = data['userId'] as int?;
+        int? residentId = data['residentid'] as int?;
+        String? firstName = data['firstName'] as String?;
+        String? lastName = data['lastName'] as String?;
+        String? address = data['address'] as String?;
+        String? roleName = data['roleName'] as String?;
+        String? mobile = data['mobile'] as String?;
+        String? image = data['image'] as String?;
+
+        // Navigate to QrDetailsScreen
+        await Get.to(() => QrDetailsScreen(
+              userId: residentId,
+              firstName: firstName,
+              lastName: lastName,
+              address: address,
+              roleName: roleName,
+              mobile: mobile,
+              image: image,
+            ));
+
+        // Dispose the controller after navigating
+        controller.dispose();
       } catch (e) {
         print('Parsing error: $e');
         Get.snackbar("Error", "Failed to parse scanned data: ${e.toString()}");
-      } finally {
-        // Don't dispose the controller here
       }
     });
-  }
-
-  Future<void> _showDialogWithScannedData(Map<String, dynamic> data) async {
-    try {
-      // Extracting data into individual variables
-      int? userId = data['userId'] as int?;
-      int? residentId = data['residentid'] as int?;
-      String? firstName = data['firstName'] as String?;
-      String? lastName = data['lastName'] as String?;
-      String? address = data['address'] as String?;
-      String? roleName = data['roleName'] as String?;
-      String? mobile = data['mobile'] as String?;
-      String? image = data['image'] as String?;
-
-      // Navigate to the QrDetailsScreen
-      Get.to(() => QrDetailsScreen(
-            userId: residentId,
-            firstName: firstName,
-            lastName: lastName,
-            address: address,
-            roleName: roleName,
-            mobile: mobile,
-            image: image,
-          ));
-
-      // After navigating, set the dialog shown flag back to false
-      isDialogShown = false;
-    } catch (e) {
-      Get.snackbar("Error", "Failed to fetch scanned data: ${e.toString()}");
-    }
   }
 }

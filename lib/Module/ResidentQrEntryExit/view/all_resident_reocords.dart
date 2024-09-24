@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/components/dialogue.dart';
@@ -21,12 +21,12 @@ import '../controller/resident_qr_entry_exit_controller.dart';
 import 'resident-qr_entry_exit.dart';
 
 class AllResidentRecord extends StatelessWidget {
-  const AllResidentRecord({super.key});
+  AllResidentRecord({super.key});
+
+  var controller = Get.put(ResidentQrEntryController());
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<ResidentQrEntryController>();
-
     return WillPopScope(
       onWillPop: () async {
         Get.offNamed(homescreen, arguments: controller.userdata);
@@ -45,12 +45,18 @@ class AllResidentRecord extends StatelessWidget {
                       Get.offNamed(homescreen, arguments: controller.userdata);
                     },
                   ),
-                  MyTextFormField(
-                    hintText: "Search Name ",
-                    labelText: "Search Name",
-                    onChanged: (v) {
-                      controller.searchValue.value = v;
-                    },
+                  Row(
+                    children: [
+                      Expanded(
+                        child: MyTextFormField(
+                          hintText: "Search Name ",
+                          labelText: "Search Name",
+                          onChanged: (v) {
+                            controller.searchValue.value = v;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                   Expanded(
                     child: PagedListView(
@@ -78,7 +84,7 @@ class AllResidentRecord extends StatelessWidget {
                         },
                         noItemsFoundIndicatorBuilder: (context) {
                           return Padding(
-                            padding: const EdgeInsets.only(top: 300),
+                            padding: const EdgeInsets.only(top: 200),
                             child: EmptyList(
                               name: 'No Entrise',
                             ),
