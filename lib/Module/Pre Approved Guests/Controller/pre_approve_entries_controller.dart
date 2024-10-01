@@ -50,6 +50,7 @@ class PreApproveEntriesController extends GetxController {
       required String cnic,
       required String vechileno,
       BuildContext? context}) async {
+    print("pre approved qr scan method call");
     isLoading.value = true;
     errorUpdatingStatus = "";
 

@@ -18,7 +18,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../Widgets/new_widgets/empty_list.dart';
 import '../../../Widgets/new_widgets/my_back_button.dart';
 import '../controller/resident_qr_entry_exit_controller.dart';
-import 'resident-qr_entry_exit.dart';
 
 class AllResidentRecord extends StatelessWidget {
   AllResidentRecord({super.key});
@@ -112,14 +111,14 @@ class AllResidentRecord extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        Get.to(() => ResidentQrEntryExit());
-                      },
-                      icon: Icon(
-                        Icons.qr_code_2,
-                        size: 60,
-                      )),
+                  // IconButton(
+                  //     onPressed: () {
+                  //       Get.to(() => ResidentQrEntryExit());
+                  //     },
+                  //     icon: Icon(
+                  //       Icons.qr_code_2,
+                  //       size: 60,
+                  //     )),
                 ],
               )),
         ),

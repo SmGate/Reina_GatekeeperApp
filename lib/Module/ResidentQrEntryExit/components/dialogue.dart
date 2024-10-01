@@ -158,7 +158,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Checkout Time',
+            'Exit Time',
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -181,7 +181,7 @@ class ResidentsDialogCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Checkin',
+                    'Entry',
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -207,7 +207,7 @@ class ResidentsDialogCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Checkout',
+                    'Exit',
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,

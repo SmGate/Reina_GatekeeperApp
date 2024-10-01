@@ -1,7 +1,8 @@
-import 'package:gatekeeper/Module/HomeScreen/View/home_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/model/checkedin_residents_model.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/model/update_resident_entry_model.dart';
 import 'package:gatekeeper/Module/ResidentQrEntryExit/service/resident_entry_service.dart';
+import 'package:gatekeeper/Module/ResidentQrEntryExit/view/all_resident_reocords.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../Login/Model/User.dart';
@@ -75,12 +76,13 @@ class ResidentQrEntryController extends GetxController {
 
 //////  METHOD FOR PAGINATION
 
-  void updateResidentEntryStatus({
-    int? societyId,
-    int? residentId,
-    int? gatekeeperId,
-    int? subadminid,
-  }) async {
+  void updateResidentEntryStatus(
+      {int? societyId,
+      int? residentId,
+      int? gatekeeperId,
+      int? subadminid,
+      BuildContext? context}) async {
+    print("resident qr scan method call");
     loading.value = true;
     error1.value = "";
 
@@ -92,9 +94,10 @@ class ResidentQrEntryController extends GetxController {
     loading.value = false;
     if (res is UpdateResidentEntryModel) {
       residentEntryStatusModel = res;
-
+      Navigator.of(context!).pop();
       Get.snackbar("Message", residentEntryStatusModel.message.toString());
-      Get.offAll(HomeScreen(), arguments: userdata);
+
+      Get.offAll(AllResidentRecord(), arguments: userdata);
       //  Get.offNamed(residentRecords, arguments: userdata);
     } else {
       loading.value = false;

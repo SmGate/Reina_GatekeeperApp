@@ -18,4 +18,7 @@ class InstructionLabels {
 
   static const String CHECKIN_CHECKOUT_INS =
       "اس کی خصوصیت رہائشیوں کو QR کوڈ اسکین کرکے چیک ان یا چیک آؤٹ کرنے کی اجازت دیتی ہے۔";
+
+  static const String RESIDENT_INS =
+      'اس اسکرین پر جا کر آپ رہائشیوں کا ریکارڈ چیک کر سکتے ہیں۔';
 }

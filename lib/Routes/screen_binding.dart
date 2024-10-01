@@ -7,6 +7,7 @@ import '../Module/Events/View/events_screen.dart';
 import '../Module/HomeScreen/View/home_screen.dart';
 import '../Module/Login/View/login_screen.dart';
 import '../Module/NoticeBoard/View/notice_board_screen.dart';
+import '../Module/Pre Approved Guests/Controller/pre_approve_entries_controller.dart';
 import '../Module/Pre Approved Guests/View/pre_approved_guests.dart';
 import '../Module/ResidentQrEntryExit/controller/resident_qr_entry_exit_controller.dart';
 import '../Module/Residental Emergency/View/residential_emergency_screen.dart';
@@ -30,5 +31,6 @@ class ScreenBindings extends Bindings {
     Get.lazyPut(() => VehicleNumberScannerController());
     Get.lazyPut(() => ResidentQrEntryController());
     Get.lazyPut(() => VisitorDetailController());
+    Get.lazyPut(() => PreApproveEntriesController());
   }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:gatekeeper/Module/QrScanner/view/scan_qr.dart';
 
 import 'package:gatekeeper/Routes/set_routes.dart';
 import 'package:gatekeeper/Services/Shared%20Preferences/MySharedPreferences.dart';
@@ -49,6 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isSpeaking5 = false;
   bool isSpeaking6 = false;
   bool isSpeaking7 = false;
+
+  bool isSpeaking8 = false;
   @override
   void initState() {
     super.initState();
@@ -128,12 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 26,
                         ),
-                        SizedBox(
-                          height: 9,
-                        ),
-                        SizedBox(
-                          height: 13,
-                        ),
                         Center(
                           child: Container(
                             child: SvgPicture.asset(AppImages.buildingsIcon),
@@ -141,53 +138,82 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              top: 20, left: 20, right: 20),
+                              top: 10, left: 20, right: 20),
                           child: Row(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(residentRecords,
-                                      arguments: controller.user);
-                                  // Get.to(ResidentQrEntryExit());
-                                },
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.globalWhite,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 10),
-                                      child: Row(
-                                        children: [
-                                          Image.asset(
-                                            AppImages.resident,
-                                            height: 25,
-                                            color: AppColors.appThem,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            'resident_entry'.tr,
-                                            style: reusableTextStyle(
-                                                textStyle: GoogleFonts.dmSans(),
-                                                fontSize: 12.0,
-                                                color: AppColors.appThem,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     Get.toNamed(residentRecords,
+                              //         arguments: controller.user);
+                              //     // Get.to(ResidentQrEntryExit());
+                              //   },
+                              //   child: Container(
+                              //     height: 40,
+                              //     decoration: BoxDecoration(
+                              //         color: AppColors.globalWhite,
+                              //         borderRadius: BorderRadius.circular(8)),
+                              //     child: Center(
+                              //       child: Padding(
+                              //         padding: const EdgeInsets.only(
+                              //             left: 10, right: 10),
+                              //         child: Row(
+                              //           children: [
+                              //             Image.asset(
+                              //               AppImages.resident,
+                              //               height: 25,
+                              //               color: AppColors.appThem,
+                              //             ),
+                              //             SizedBox(
+                              //               width: 10,
+                              //             ),
+                              //             Text(
+                              //               'resident_entry'.tr,
+                              //               style: reusableTextStyle(
+                              //                   textStyle: GoogleFonts.dmSans(),
+                              //                   fontSize: 12.0,
+                              //                   color: AppColors.appThem,
+                              //                   fontWeight: FontWeight.bold),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+
+                              IconButton(
+                                  onPressed: () {
+                                    Get.to(() => ScanQrCodeScreen(),
+                                        arguments: controller.user);
+                                  },
+                                  icon: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.qr_code_2_rounded,
+                                        size: 70,
+                                        color: AppColors.globalWhite,
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        'scan_qr'.tr,
+                                        style: reusableTextStyle(
+                                            textStyle: GoogleFonts.dmSans(),
+                                            fontSize: 14.0,
+                                            color: AppColors.globalWhite,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+
                               Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  Get.offNamed(vistorDetailScreen,
+                                  Get.offNamed(addVistorDetailScreen,
                                       arguments: controller.user);
+                                  // Get.offNamed(vistorDetailScreen,
+                                  //     arguments: controller.user);
                                 },
                                 child: Container(
                                   height: 40,
@@ -227,6 +253,97 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ]),
                 ),
+
+                /////////////////////////////////
+
+                CustomCard(
+                  onTap: () {
+                    Get.toNamed(residentRecords, arguments: controller.user);
+                  },
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 20, left: 20, right: 20),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: AppColors.appThem,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              AppImages.resident,
+                              color: AppColors.globalWhite,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: Get.locale?.languageCode == 'ur' ? 0 : 0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'resident_entry'.tr,
+                                style: reusableTextStyle(
+                                    textStyle: GoogleFonts.dmSans(),
+                                    fontSize: 14.0,
+                                    color: AppColors.textBlack,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                width: 160,
+                                child: Text(
+                                  'resident_entry'.tr,
+                                  style: reusableTextStyle(
+                                      textStyle: GoogleFonts.dmSans(),
+                                      fontSize: 12.0,
+                                      color: AppColors.dark,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                        isSpeaking8 == true
+                            ? IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isSpeaking8 = false;
+                                    stopSpeaking();
+
+                                    print(isSpeaking8);
+                                  });
+                                },
+                                icon: Icon(Icons.volume_down_alt))
+                            : IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isSpeaking8 = true;
+                                    speakUrdu(InstructionLabels.RESIDENT_INS);
+                                    print(isSpeaking8);
+                                  });
+                                },
+                                icon: Icon(Icons.volume_off)),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                ////////////////////////
                 CustomCard(
                   onTap: () {
                     Get.toNamed(preApproveEntryResidents,
