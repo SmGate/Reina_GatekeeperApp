@@ -4,13 +4,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gatekeeper/Module/ResidentQrEntryExit/controller/resident_qr_entry_exit_controller.dart';
+import 'package:gatekeeper/Module/QrScanner/controller/qr_entry_controller.dart';
+import 'package:gatekeeper/Module/QrScanner/view/qr_details.dart';
 
 import 'package:gatekeeper/utils/styles/colors.dart';
 import 'package:get/get.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import '../component/dialogue.dart';
 import '../model/qr_data_model.dart';
 
 class ScanQrCodeScreen extends StatefulWidget {
@@ -24,21 +24,24 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
   late StreamSubscription<Barcode> scanSubscription;
 
   Map<String, dynamic>? scannedData;
-  var residentQrEntryController = Get.put(ResidentQrEntryController());
-
+  var qrEntryController = Get.find<QrEntryController>();
+  bool isCameraPaused = false; // Add this flag
   @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
-      controller?.pauseCamera();
+    if (!isCameraPaused) {
+      // Only resume if the camera is not paused
+      if (Platform.isAndroid) {
+        controller?.pauseCamera();
+      }
+      controller?.resumeCamera();
     }
-    controller?.resumeCamera();
   }
 
   @override
   void dispose() {
     scanSubscription.cancel(); // Cancel the subscription
-
+    controller?.dispose(); // Dispose the controller
     super.dispose();
   }
 
@@ -67,61 +70,57 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
 
       try {
         // Save scanned data
-        scannedData = jsonDecode(scanData.code!);
-        print("Scan data is: $scannedData");
+        var decodedData = jsonDecode(scanData.code!);
+        print(
+            "Decoded scan data is: $decodedData (${decodedData.runtimeType})");
 
-        controller.pauseCamera();
+        if (decodedData is Map<String, dynamic>) {
+          Map<String, dynamic> data = decodedData;
 
-        Map<String, dynamic> data = scannedData!;
+          QrData qrData;
 
-        QrData qrData;
+          // Check if it is a resident QR code
+          if (data.containsKey('userId') && data.containsKey('residentid')) {
+            qrData = QrData.resident(
+              type: "resident",
+              userId: data['userId'] as int?,
+              residentId: data['residentid'] as int?,
+              firstName: data['firstName'] as String?,
+              lastName: data['lastName'] as String?,
+              address: data['address'] as String?,
+              roleName: data['roleName'] as String?,
+              mobile: data['mobile'] as String?,
+              image: data['image'] as String?,
+            );
+          } else if (data.containsKey('id') && data.containsKey('cnic')) {
+            qrData = QrData.preApproved(
+              type: 'pre-approved',
+              id: data['id'] ?? 0,
+              cnic: data['cnic'] as String?,
+              vehicleNo: data['vechileno'] as String?,
+              visitorType: data['visitortype'] as String?,
+              description: data['description'] as String?,
+              mobile: data['mobileno'] as String?,
+              image: data['image'] as String?,
+              name: data['name'] as String?,
+            );
+          } else {
+            // Handle unexpected QR structure
+            Get.snackbar("Error", "Unknown QR code format.");
+            return;
+          }
 
-        // Check if it is a resident QR code
-        if (data.containsKey('userId') && data.containsKey('residentid')) {
-          qrData = QrData.resident(
-            type: scannedData?['userType'] as String?,
-            userId: data['userId'] as int?,
-            residentId: data['residentid'] as int?,
-            firstName: data['firstName'] as String?,
-            lastName: data['lastName'] as String?,
-            address: data['address'] as String?,
-            roleName: data['roleName'] as String?,
-            mobile: data['mobile'] as String?,
-            image: data['image'] as String?,
-          );
-        } else if (data.containsKey('id') && data.containsKey('cnic')) {
-          qrData = QrData.preApproved(
-            type: 'pre-approved',
-            id: data['id'] ?? 0,
-            cnic: data['cnic'] ?? "",
-            vehicleNo: data['vechileno'] ?? "",
-            visitorType: data['visitortype'] ?? "",
-            description: data['description'] ?? "",
-            mobile: data['mobileno'] ?? "",
-            image: data['image'] ?? "",
-            name: data['name'] ?? "",
-          );
+          await controller.pauseCamera();
+          isCameraPaused = true; // Mark the camera as paused
+          scanSubscription.cancel();
+          controller.dispose();
+
+          Get.to(QrDetailsScreen(qrData: qrData, qrcontrolle: controller));
         } else {
-          // Handle unexpected QR structure
-          Get.snackbar("Error", "Unknown QR code format.");
-          return;
+          print("Scanned data is not in expected format.");
+          Get.snackbar("Error", "Scanned data is not in expected format.");
         }
 
-        // Get.to(() => ScaneedDataDetails(
-        //       qrData: qrData,
-        //     ));
-        qrData.type == "resident"
-            ? showScannedDataDialogForResident(
-                qrData,
-                context,
-                controller,
-                residentQrEntryController,
-              )
-            : showScannedDataDialogForPreApproved(
-                qrData,
-                context,
-                controller,
-              );
         controller.dispose();
       } catch (e) {
         print('Parsing error: $e');

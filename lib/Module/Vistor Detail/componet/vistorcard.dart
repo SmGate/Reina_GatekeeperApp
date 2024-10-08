@@ -23,179 +23,188 @@ class VisitorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 90,
       child: Card(
-        color: AppColors.globalWhite,
-        surfaceTintColor: AppColors.globalWhite,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: Container(
-                  width: 110,
-                  height: 27,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.appThem),
-                    borderRadius: BorderRadius.circular(
-                      4,
+          color: AppColors.globalWhite,
+          surfaceTintColor: AppColors.globalWhite,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                    width: 110,
+                    height: 27,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.appThem),
+                      borderRadius: BorderRadius.circular(
+                        4,
+                      ),
+                      color: AppColors.appThem,
                     ),
-                    color: AppColors.appThem,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 14),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_month,
-                          size: 15,
-                          color: AppColors.globalWhite,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          laravelDateToFormattedDate(
-                              visitors.arrivaldate.toString()),
-                          style: reusableTextStyle(
-                              textStyle: GoogleFonts.dmSans(),
-                              fontSize: 10.0,
-                              color: AppColors.globalWhite,
-                              fontWeight: FontWeight.normal),
-                        )
-                      ],
-                    ),
-                  )),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(13, 13, 0, 0),
-              child: Text(
-                visitors.name ?? "",
-                style: reusableTextStyle(
-                    textStyle: GoogleFonts.dmSans(),
-                    fontSize: 16.0,
-                    color: AppColors.textBlack,
-                    fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 14),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            size: 15,
+                            color: AppColors.globalWhite,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            laravelDateToFormattedDate(
+                                visitors.arrivaldate.toString()),
+                            style: reusableTextStyle(
+                                textStyle: GoogleFonts.dmSans(),
+                                fontSize: 10.0,
+                                color: AppColors.globalWhite,
+                                fontWeight: FontWeight.normal),
+                          )
+                        ],
+                      ),
+                    )),
               ),
-            ),
-            Padding(
-                padding: const EdgeInsets.fromLTRB(13, 40, 0, 0),
-                child: Text.rich(TextSpan(children: [
-                  TextSpan(
-                    text: 'Vehicle No :',
+              Padding(
+                padding: const EdgeInsets.only(left: 20, top: 20),
+                child: SizedBox(
+                  width: 150,
+                  child: Text(
+                    visitors.name ?? "",
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
-                        fontSize: 12.0,
-                        color: AppColors.dark,
+                        fontSize: 16.0,
+                        color: AppColors.textBlack,
                         fontWeight: FontWeight.bold),
+                    maxLines: 1,
                   ),
-                  TextSpan(
-                    text: visitors.vechileno,
-                    style: reusableTextStyle(
-                        textStyle: GoogleFonts.dmSans(),
-                        fontSize: 12.0,
-                        color: AppColors.dark,
-                        fontWeight: FontWeight.normal),
-                  ),
-                ]))),
-            (visitors.status == 0)
-                ? Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 40, 14, 0),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: MyStatusWidget(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return GetBuilder<VisitorDetailController>(
-                                      init: VisitorDetailController(),
-                                      builder: (visitorController) {
-                                        return Obx(() => CustomDialog(
-                                              loading:
-                                                  controller.isLoading.value,
-                                              image: Image.asset(
-                                                AppImages.warning,
-                                                color: AppColors.globalWhite,
-                                              ),
-                                              negativeBtnPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              title:
-                                                  "Do you want to Checkout this?",
-                                              positiveBtnText: "Checkout",
-                                              negativeBtnText: "Cancel",
-                                              // loading: visitorController.isLoading,
-                                              positiveBtnPressed: () async {
-                                                visitorController.currentDate =
-                                                    visitorController
-                                                            .currentDateTime
-                                                            .year
-                                                            .toString() +
-                                                        "-" +
-                                                        visitorController
-                                                            .currentDateTime
-                                                            .month
-                                                            .toString() +
-                                                        "-" +
-                                                        visitorController
-                                                            .currentDateTime.day
-                                                            .toString();
-
-                                                visitorController.currentTime =
-                                                    visitorController
-                                                            .currentDateTime
-                                                            .hour
-                                                            .toString() +
-                                                        ":" +
-                                                        visitorController
-                                                            .currentDateTime
-                                                            .minute
-                                                            .toString() +
-                                                        ":" +
-                                                        visitorController
-                                                            .currentDateTime
-                                                            .second
-                                                            .toString();
-
-                                                if (!visitorController
-                                                    .isLoading.value) {
-                                                  visitorController
-                                                      .updateVisitorDetailApi(
-                                                          vid: visitors.id ?? 0,
-                                                          checkoutdate:
-                                                              visitorController
-                                                                  .currentDate!,
-                                                          checkouttime:
-                                                              visitorController
-                                                                  .currentTime!,
-                                                          context: context);
-                                                }
-                                              },
-                                            ));
-                                      });
-                                });
-                          },
-                          status: 'Check-Out',
-                          color: HexColor('#E85C5C')),
-                    ),
-                  )
-                : Container(),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(13, 60, 0, 0),
-              child: Text(
-                visitors.houseaddress ?? "",
-                style: GoogleFonts.ubuntu(
-                    color: HexColor('#A5AAB7'),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 20),
+                child: Row(
+                  children: [
+                    Text.rich(TextSpan(children: [
+                      TextSpan(
+                        text: 'Vehicle No :',
+                        style: reusableTextStyle(
+                            textStyle: GoogleFonts.dmSans(),
+                            fontSize: 12.0,
+                            color: AppColors.dark,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: visitors.vechileno,
+                        style: reusableTextStyle(
+                            textStyle: GoogleFonts.dmSans(),
+                            fontSize: 12.0,
+                            color: AppColors.dark,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ])),
+                    Spacer(),
+                    (visitors.status == 0)
+                        ? MyStatusWidget(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return GetBuilder<VisitorDetailController>(
+                                        init: VisitorDetailController(),
+                                        builder: (visitorController) {
+                                          return Obx(() => CustomDialog(
+                                                loading:
+                                                    controller.isLoading.value,
+                                                image: Image.asset(
+                                                  AppImages.warning,
+                                                  color: AppColors.globalWhite,
+                                                ),
+                                                negativeBtnPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                title:
+                                                    "Do you want to Checkout this?",
+                                                positiveBtnText: "Checkout",
+                                                negativeBtnText: "Cancel",
+                                                // loading: visitorController.isLoading,
+                                                positiveBtnPressed: () async {
+                                                  visitorController
+                                                          .currentDate =
+                                                      visitorController
+                                                              .currentDateTime
+                                                              .year
+                                                              .toString() +
+                                                          "-" +
+                                                          visitorController
+                                                              .currentDateTime
+                                                              .month
+                                                              .toString() +
+                                                          "-" +
+                                                          visitorController
+                                                              .currentDateTime
+                                                              .day
+                                                              .toString();
+
+                                                  visitorController.currentTime =
+                                                      visitorController
+                                                              .currentDateTime
+                                                              .hour
+                                                              .toString() +
+                                                          ":" +
+                                                          visitorController
+                                                              .currentDateTime
+                                                              .minute
+                                                              .toString() +
+                                                          ":" +
+                                                          visitorController
+                                                              .currentDateTime
+                                                              .second
+                                                              .toString();
+
+                                                  if (!visitorController
+                                                      .isLoading.value) {
+                                                    visitorController
+                                                        .updateVisitorDetailApi(
+                                                            vid: visitors.id ??
+                                                                0,
+                                                            checkoutdate:
+                                                                visitorController
+                                                                    .currentDate!,
+                                                            checkouttime:
+                                                                visitorController
+                                                                    .currentTime!,
+                                                            context: context);
+                                                  }
+                                                },
+                                              ));
+                                        });
+                                  });
+                            },
+                            status: 'Check-Out',
+                            color: HexColor('#E85C5C'))
+                        : Container(),
+                    SizedBox(
+                      width: 20,
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
+                child: Text(
+                  visitors.houseaddress ?? "",
+                  style: GoogleFonts.ubuntu(
+                      color: HexColor('#A5AAB7'),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

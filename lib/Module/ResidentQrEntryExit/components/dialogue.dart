@@ -41,7 +41,7 @@ class ResidentsDialogCard extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Center(
             child: Text(
-              'Resident',
+              'resident'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 18.0,
@@ -51,7 +51,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Name',
+            'name'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -69,7 +69,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Address',
+            'address'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -87,7 +87,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Mobile No',
+            'mobile'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -104,7 +104,7 @@ class ResidentsDialogCard extends StatelessWidget {
                 fontWeight: FontWeight.normal),
           ),
           Text(
-            'Visitor Type',
+            'visitor_type'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -122,7 +122,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Vehicle No',
+            'vehicle_no'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -140,7 +140,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Status',
+            'status'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -158,7 +158,7 @@ class ResidentsDialogCard extends StatelessWidget {
           ),
           14.h.ph,
           Text(
-            'Exit Time',
+            'exit_time'.tr,
             style: reusableTextStyle(
                 textStyle: GoogleFonts.dmSans(),
                 fontSize: 16.0,
@@ -181,7 +181,7 @@ class ResidentsDialogCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Entry',
+                    'entry'.tr,
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -207,7 +207,7 @@ class ResidentsDialogCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Exit',
+                    'exit'.tr,
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -235,7 +235,7 @@ class ResidentsDialogCard extends StatelessWidget {
           Center(
             child: MyButton(
               gradient: AppGradients.buttonGradient,
-              name: 'Ok',
+              name: 'ok'.tr,
               width: double.infinity,
               height: 31.w,
               border: 7.r,

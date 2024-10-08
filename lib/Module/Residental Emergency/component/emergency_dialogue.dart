@@ -48,7 +48,7 @@ class EmergencyDialog extends StatelessWidget {
             ),
             14.h.ph,
             DialogBoxElipseHeading(
-              text: "Emergency At",
+              text: "emergency_at".tr,
             ),
             8.95.h.ph,
             Padding(
@@ -64,7 +64,7 @@ class EmergencyDialog extends StatelessWidget {
             ),
             8.95.h.ph,
             DialogBoxElipseHeading(
-              text: "Address",
+              text: "address".tr,
             ),
             8.95.h.ph,
             Padding(
@@ -80,7 +80,7 @@ class EmergencyDialog extends StatelessWidget {
             ),
             8.95.h.ph,
             DialogBoxElipseHeading(
-              text: "Mobile No",
+              text: "mobile".tr,
             ),
             Padding(
               padding: EdgeInsets.only(left: 26.w),
@@ -119,7 +119,7 @@ class EmergencyDialog extends StatelessWidget {
             ),
             8.95.h.ph,
             DialogBoxElipseHeading(
-              text: "Description",
+              text: "description".tr,
             ),
             8.95.h.ph,
             Padding(
@@ -135,7 +135,7 @@ class EmergencyDialog extends StatelessWidget {
                 border: 300.r,
                 width: double.infinity,
                 height: 40.w,
-                name: 'Ok',
+                name: 'ok'.tr,
                 onPressed: () {
                   Get.back();
                 },

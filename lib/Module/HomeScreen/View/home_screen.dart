@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:gatekeeper/Module/QrScanner/view/scan_qr.dart';
 
 import 'package:gatekeeper/Routes/set_routes.dart';
 import 'package:gatekeeper/Services/Shared%20Preferences/MySharedPreferences.dart';
@@ -183,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                               IconButton(
                                   onPressed: () {
-                                    Get.to(() => ScanQrCodeScreen(),
+                                    Get.offNamed(scanQrCodeScreen,
                                         arguments: controller.user);
                                   },
                                   icon: Column(

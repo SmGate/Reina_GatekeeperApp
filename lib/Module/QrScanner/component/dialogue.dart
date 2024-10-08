@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gatekeeper/Module/Pre%20Approved%20Guests/Controller/pre_approve_entries_controller.dart';
+import 'package:gatekeeper/Module/QrScanner/controller/qr_entry_controller.dart';
 import 'package:gatekeeper/Module/QrScanner/model/qr_data_model.dart';
-import 'package:gatekeeper/Module/ResidentQrEntryExit/controller/resident_qr_entry_exit_controller.dart';
+import 'package:gatekeeper/utils/Constants/api_routes.dart';
 import 'package:gatekeeper/utils/styles/colors.dart';
 import 'package:get/get.dart';
 
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-void showScannedDataDialogForResident(
-  QrData qrData,
-  BuildContext context,
-  QRViewController? qrcontrolle,
-  ResidentQrEntryController controller,
-) {
+void showScannedDataDialogForResident(QrData qrData, BuildContext context,
+    QRViewController? qrcontrolle, QrEntryController qrEntryController) {
   // var preApprovedEntryController = Get.put(PreApproveEntriesController());
   showDialog(
     context: context,
@@ -23,6 +19,12 @@ void showScannedDataDialogForResident(
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(shape: BoxShape.circle),
+                child: Image.network("${Api.imageBaseUrl}${qrData.image}"),
+              ),
               _buildDataRow('Type:', qrData.type ?? ""),
               _buildDataRow('User ID:', qrData.userId.toString()),
               _buildDataRow('Resident ID:', qrData.residentId.toString()),
@@ -47,7 +49,7 @@ void showScannedDataDialogForResident(
               qrcontrolle?.resumeCamera();
             },
           ),
-          Obx(() => controller.loading.value
+          Obx(() => qrEntryController.loading.value
               ? SizedBox(
                   height: 30,
                   width: 30,
@@ -65,12 +67,12 @@ void showScannedDataDialogForResident(
                   child: Text('Done'),
                   onPressed: () {
                     qrcontrolle?.resumeCamera();
-                    controller.updateResidentEntryStatus(
-                        societyId: controller.userdata.societyid,
-                        residentId: qrData.residentId,
-                        gatekeeperId: controller.userdata.userid,
-                        subadminid: controller.userdata.subadminid,
-                        context: context);
+                    qrEntryController.updateResidentEntryStatus(
+                      societyId: qrEntryController.userdata.societyid,
+                      residentId: qrData.residentId,
+                      gatekeeperId: qrEntryController.userdata.userid,
+                      subadminid: qrEntryController.userdata.subadminid,
+                    );
                   },
                 )),
         ],
@@ -80,13 +82,19 @@ void showScannedDataDialogForResident(
 }
 
 void showScannedDataDialogForPreApproved(
-  QrData qrData,
-  BuildContext context,
-  QRViewController? qrcontrolle,
-) {
-  var preApprovedEntryController = Get.put(PreApproveEntriesController());
+    {int? id,
+    String? cnic,
+    String? vehicleNo,
+    String? visitorType,
+    String? description,
+    String? name,
+    String? mobile,
+    String? image,
+    BuildContext? context,
+    QRViewController? qrcontrolle,
+    QrEntryController? qrEntryController}) {
   showDialog(
-    context: context,
+    context: context!,
     builder: (context) {
       return AlertDialog(
         title: Text('Scanned QR Data',
@@ -94,14 +102,19 @@ void showScannedDataDialogForPreApproved(
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              _buildDataRow('Type:', qrData.type ?? ""),
-              _buildDataRow('ID:', qrData.id.toString()),
-              _buildDataRow('CNIC:', qrData.cnic ?? ""),
-              _buildDataRow('Vehicle No:', qrData.vehicleNo ?? ""),
-              _buildDataRow('Visitor Type:', qrData.visitorType ?? ""),
-              _buildDataRow('Name:', qrData.name ?? ""),
-              _buildDataRow('Mobile:', qrData.mobile ?? ""),
-              _buildDataRow('Description:', qrData.description ?? ""),
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(shape: BoxShape.circle),
+                child: Image.network("${Api.imageBaseUrl}${image}"),
+              ),
+              _buildDataRow('ID:', id.toString()),
+              _buildDataRow('CNIC:', cnic ?? ""),
+              _buildDataRow('Vehicle No:', vehicleNo ?? ""),
+              _buildDataRow('Visitor Type:', visitorType ?? ""),
+              _buildDataRow('Name:', name ?? ""),
+              _buildDataRow('Mobile:', mobile ?? ""),
+              _buildDataRow('Description:', description ?? ""),
             ],
           ),
         ),
@@ -120,7 +133,7 @@ void showScannedDataDialogForPreApproved(
               qrcontrolle?.resumeCamera();
             },
           ),
-          Obx(() => preApprovedEntryController.isLoading.value
+          Obx(() => qrEntryController!.isLoading.value
               ? SizedBox(
                   height: 30,
                   width: 30,
@@ -136,16 +149,14 @@ void showScannedDataDialogForPreApproved(
                       )),
                   child: Text('Done'),
                   onPressed: () {
-                     qrcontrolle?.resumeCamera();
-                    preApprovedEntryController.updatePreApproveEntryStatusApi(
-                        id: qrData.id!,
-                        status: 2,
-                        statusdescription: 'CheckIn',
-                        cnic: qrData.cnic ?? "",
-                        vechileno: qrData.vehicleNo ?? "",
-                        context: context);
-                   
-                   
+                    qrcontrolle?.resumeCamera();
+                    qrEntryController.updatePreApproveEntryStatusApi(
+                      id: id!,
+                      status: 2,
+                      statusdescription: 'CheckIn',
+                      cnic: cnic ?? "",
+                      vechileno: vehicleNo ?? "",
+                    );
                   },
                 )),
         ],

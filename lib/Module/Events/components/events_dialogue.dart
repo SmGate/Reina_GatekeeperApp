@@ -38,7 +38,7 @@ class EventDialog extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                "Event",
+                "event".tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 18.0,
@@ -48,7 +48,7 @@ class EventDialog extends StatelessWidget {
             ),
             14.h.ph,
             Text(
-              'Title',
+              'title'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 16.0,
@@ -66,7 +66,7 @@ class EventDialog extends StatelessWidget {
             ),
             14.h.ph,
             Text(
-              'Description',
+              'description'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 16.0,
@@ -86,7 +86,7 @@ class EventDialog extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'From',
+                  'from'.tr,
                   style: reusableTextStyle(
                       textStyle: GoogleFonts.dmSans(),
                       fontSize: 16.0,
@@ -95,7 +95,7 @@ class EventDialog extends StatelessWidget {
                 ),
                 82.w.pw,
                 Text(
-                  'To',
+                  'to'.tr,
                   style: reusableTextStyle(
                       textStyle: GoogleFonts.dmSans(),
                       fontSize: 16.0,
@@ -146,7 +146,7 @@ class EventDialog extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'From',
+                  'from'.tr,
                   style: reusableTextStyle(
                       textStyle: GoogleFonts.dmSans(),
                       fontSize: 16.0,
@@ -155,7 +155,7 @@ class EventDialog extends StatelessWidget {
                 ),
                 82.w.pw,
                 Text(
-                  'To',
+                  'to'.tr,
                   style: reusableTextStyle(
                       textStyle: GoogleFonts.dmSans(),
                       fontSize: 16.0,
@@ -205,7 +205,7 @@ class EventDialog extends StatelessWidget {
               child: MyButton(
                 gradient: AppGradients.buttonGradient,
                 width: double.infinity,
-                name: 'OK',
+                name: 'ok'.tr,
                 onPressed: () {
                   Get.back();
                 },

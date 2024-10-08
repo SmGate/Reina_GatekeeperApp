@@ -1,4 +1,5 @@
 import 'package:gatekeeper/Module/Pre%20Approve%20Entry%20Residents/View/pre_approve_entry_residents.dart';
+import 'package:gatekeeper/Module/QrScanner/controller/qr_entry_controller.dart';
 import 'package:gatekeeper/Module/ResidentParkingScan/controller/vehicle_number_scanner_controller.dart';
 import 'package:get/get.dart';
 
@@ -32,5 +33,6 @@ class ScreenBindings extends Bindings {
     Get.lazyPut(() => ResidentQrEntryController());
     Get.lazyPut(() => VisitorDetailController());
     Get.lazyPut(() => PreApproveEntriesController());
+    Get.lazyPut(() => QrEntryController());
   }
 }

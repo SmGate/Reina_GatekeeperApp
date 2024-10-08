@@ -6,6 +6,7 @@ import 'package:gatekeeper/Widgets/new_widgets/my_button.dart';
 import 'package:gatekeeper/utils/Constants/constants.dart';
 import 'package:gatekeeper/utils/styles/colors.dart';
 import 'package:gatekeeper/utils/styles/text_style.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PreApproveEntryDialog extends StatelessWidget {
@@ -58,37 +59,37 @@ class PreApproveEntryDialog extends StatelessWidget {
               ),
             ),
             23.33.ph,
-            DialogBoxElipseHeading(text: 'Visitor Type'),
+            DialogBoxElipseHeading(text: 'visitor_type'.tr),
             DialogBoxText(
               text: visitortype ?? "",
             ),
             23.33.ph,
-            DialogBoxElipseHeading(text: 'Vechile No'),
+            DialogBoxElipseHeading(text: 'vehicle_no'.tr),
             DialogBoxText(
               text: vechileno ?? "",
             ),
             23.33.ph,
-            DialogBoxElipseHeading(text: 'Mobile No'),
+            DialogBoxElipseHeading(text: 'mobile'.tr),
             DialogBoxText(
               text: mobileno,
             ),
             23.33.ph,
-            DialogBoxElipseHeading(text: 'Expected Arrival Time'),
+            DialogBoxElipseHeading(text: 'expected_arrival_time'.tr),
             DialogBoxText(
               text: Hour12formatTime(arrivaltime!),
             ),
             23.33.ph,
-            DialogBoxElipseHeading(text: 'CNIC'),
+            DialogBoxElipseHeading(text: 'cnic'.tr),
             DialogBoxText(
               text: cnic ?? "",
             ),
             23.33.ph,
-            DialogBoxElipseHeading(text: 'Expected Arrival Date'),
+            DialogBoxElipseHeading(text: 'expected_arrival_date'.tr),
             DialogBoxText(text: laravelDateToFormattedDate(arrivaldate ?? "")),
             23.33.ph,
             MyButton(
               width: double.infinity,
-              name: 'Okay',
+              name: 'ok'.tr,
               gradient: AppGradients.buttonGradient,
               onPressed: () {
                 Navigator.pop(context);

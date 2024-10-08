@@ -1,5 +1,6 @@
 import 'package:gatekeeper/Module/Login/View/login_screen.dart';
 import 'package:gatekeeper/Module/Pre%20Approve%20Entry%20Residents/View/pre_approve_entry_residents.dart';
+import 'package:gatekeeper/Module/QrScanner/view/scan_qr.dart';
 import 'package:gatekeeper/Module/ResidentParkingScan/view/vahicle_number_scanner.dart';
 import 'package:gatekeeper/Routes/screen_binding.dart';
 import 'package:get/get.dart';
@@ -76,6 +77,11 @@ class RouteManagement {
       GetPage(
           name: residentRecords,
           page: () => AllResidentRecord(),
+          binding: ScreenBindings(),
+          transition: Transition.noTransition),
+      GetPage(
+          name: scanQrCodeScreen,
+          page: () => ScanQrCodeScreen(),
           binding: ScreenBindings(),
           transition: Transition.noTransition),
     ];

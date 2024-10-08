@@ -66,8 +66,8 @@ class VehicleNumberScanner extends StatelessWidget {
                               labelPadding:
                                   EdgeInsets.symmetric(horizontal: 20),
                               tabs: [
-                                Tab(text: 'Scan Car Number'),
-                                Tab(text: 'Manual Input'),
+                                Tab(text: 'scan_car_number'.tr),
+                                Tab(text: 'manual_input'.tr),
                               ],
                             ),
                           ),

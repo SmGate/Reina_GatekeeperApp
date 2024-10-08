@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gatekeeper/Module/Pre%20Approve%20Entry%20Residents/View/scan_qr.dart';
 import 'package:gatekeeper/Module/Pre%20Approved%20Guests/components/pre_approved_entry_dialogue.dart';
 import 'package:gatekeeper/Module/Pre%20Approved%20Guests/model/pre_approved_guest_model.dart';
 import 'package:gatekeeper/Widgets/new_widgets/loading.dart';
@@ -119,29 +118,6 @@ class PreApprovedGuests extends GetView {
                           name: 'Something Went Wrong',
                         )
                       ],
-                      Container(
-                        //color: AppColors.appThem,
-                        height: 120,
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.qr_code_2_outlined,
-                                size: 80,
-                                color: AppColors.textBlack,
-                              ),
-                              onPressed: () {
-                                Get.to(() => QRScanner());
-                              },
-                            ),
-                            Text(
-                              "Scan Qr",
-                              style: TextStyle(color: AppColors.textBlack),
-                            )
-                          ],
-                        ),
-                      )
                     ],
                   ),
                 ),

@@ -6,6 +6,7 @@ import 'package:gatekeeper/utils/Constants/app_gradient.dart';
 import 'package:gatekeeper/utils/Constants/constants.dart';
 import 'package:gatekeeper/utils/styles/colors.dart';
 import 'package:gatekeeper/utils/styles/text_style.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
@@ -36,7 +37,7 @@ AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
                 width: 8,
               ),
               Text(
-                'Description',
+                'description'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 16.0,
@@ -66,7 +67,7 @@ AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
                 width: 8,
               ),
               Text(
-                'Date',
+                'date'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 16.0,
@@ -81,7 +82,7 @@ AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
                 width: 8,
               ),
               Text(
-                'Vehicle No',
+                'vehicle_no'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 16.0,
@@ -132,7 +133,7 @@ AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
                 width: 8,
               ),
               Text(
-                'Check-In Time',
+                'checkIn_time'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 16.0,
@@ -165,7 +166,7 @@ AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
                 width: 8,
               ),
               Text(
-                'Visitor Type',
+                'visitor_type'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 16.0,
@@ -192,7 +193,7 @@ AlertDialog VisitorDialogue(Datum visitors, BuildContext context) {
             height: 34,
           ),
           MyButton(
-            name: "Ok",
+            name: "ok".tr,
             gradient: AppGradients.buttonGradient,
             onPressed: () {
               Navigator.pop(context);

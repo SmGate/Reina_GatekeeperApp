@@ -41,7 +41,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
           if (status == 0) ...[
             Center(
               child: Text(
-                'Notice Board',
+                'notice_board'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 18.0,
@@ -51,7 +51,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
             ),
             14.h.ph,
             Text(
-              'Title',
+              'title'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 16.0,
@@ -69,7 +69,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
             ),
             14.h.ph,
             Text(
-              'Description',
+              'description'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 16.0,
@@ -93,7 +93,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "From",
+                    "from".tr,
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -102,7 +102,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
                   ),
                   110.w.pw,
                   Text(
-                    "To",
+                    "to".tr,
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -137,7 +137,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "From",
+                    "from".tr,
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -146,7 +146,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
                   ),
                   110.w.pw,
                   Text(
-                    "To",
+                    "to".tr,
                     style: reusableTextStyle(
                         textStyle: GoogleFonts.dmSans(),
                         fontSize: 16.0,
@@ -173,7 +173,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
             Center(
               child: MyButton(
                 gradient: AppGradients.buttonGradient,
-                name: 'Ok',
+                name: 'ok'.tr,
                 width: double.infinity,
                 height: 31.w,
                 border: 7.r,
@@ -185,7 +185,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
           ] else ...[
             Center(
               child: Text(
-                'Notice Board',
+                'notice_board'.tr,
                 style: reusableTextStyle(
                     textStyle: GoogleFonts.dmSans(),
                     fontSize: 18.0,
@@ -195,7 +195,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
             ),
             14.h.ph,
             Text(
-              'Title',
+              'title'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 16.0,
@@ -213,7 +213,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
             ),
             14.h.ph,
             Text(
-              'Description',
+              'description'.tr,
               style: reusableTextStyle(
                   textStyle: GoogleFonts.dmSans(),
                   fontSize: 16.0,
@@ -233,7 +233,7 @@ class NoticeBoardDialogCard extends StatelessWidget {
             Center(
               child: MyButton(
                 gradient: AppGradients.buttonGradient,
-                name: 'Ok',
+                name: 'ok'.tr,
                 width: double.infinity,
                 height: 40.w,
                 border: 7.r,
